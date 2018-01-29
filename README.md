@@ -7,7 +7,7 @@ For addressTrans.java
  
   The physical address should be like this: ID.Province + City + District + Village + Street + Other detailed address. 
                                            
-                                           (e.g. 2009000003.上海徐汇区上海市田林路222号3M中国有限公司)
+    (e.g. 2009000003.上海徐汇区上海市田林路222号3M中国有限公司)
   
   Geocoding v2 API will return 5 values: longitude, latitude, precise, confidence, level.
   
