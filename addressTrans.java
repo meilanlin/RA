@@ -14,24 +14,24 @@ import java.util.Map;
 
 public class addressTrans {
 	public static void main(String args[]) throws IOException {
-		String lng 			= null;
-		String lat 			= null;
-		String precise 		= null;
-		String confidence 	= null;
-		String level 		= null;
-		String currentLine 	= "";
-		String calLine 		= "";
-		int totalLine 		= 0;
-		int count 			= 0;
+		String lng 	   = null;
+		String lat 	   = null;
+		String precise 	   = null;
+		String confidence  = null;
+		String level 	   = null;
+		String currentLine = "";
+		String calLine 	   = "";
+		int totalLine 	   = 0;
+		int count 	   = 0;
 
-		long startTime 			  = System.currentTimeMillis();
-		String pathname 		  = "D:\\2009-2.txt";
-		File filename 			  = new File(pathname);
+		long startTime 		  = System.currentTimeMillis();
+		String pathname 	  = "D:\\2009-2.txt";
+		File filename 		  = new File(pathname);
 		InputStreamReader reader  = new InputStreamReader(new FileInputStream(filename));
-		BufferedReader br 		  = new BufferedReader(reader);
+		BufferedReader br 	  = new BufferedReader(reader);
 		// Get total lines
 		InputStreamReader reader2 = new InputStreamReader(new FileInputStream(filename));
-		BufferedReader cal 		  = new BufferedReader(reader2);
+		BufferedReader cal 	  = new BufferedReader(reader2);
 		while (calLine != null) {
 			calLine = cal.readLine(); // Read one line at a time
 			if (calLine == null)
@@ -47,11 +47,11 @@ public class addressTrans {
 			String address 	= info[1];
 			Map<String, String> map = addressTrans.getLatitude(address);
 			if (null != map) {
-				lng 		= map.get("lng");// longitude
-				lat 		= map.get("lat");// latitude
-				precise 	= map.get("precise");// 0-Fuzzy search 1-Exact search
-				confidence 	= map.get("confidence");// >80 means
-				level 		= map.get("levelNew");
+				lng 	   = map.get("lng");// longitude
+				lat 	   = map.get("lat");// latitude
+				precise    = map.get("precise");// 0-Fuzzy search 1-Exact search
+				confidence = map.get("confidence");// >80 means
+				level 	   = map.get("levelNew");
 			}
 			try {
 				File csv = new File("D:\\output.csv");
@@ -77,18 +77,16 @@ public class addressTrans {
 			System.out.println(" " + nf.format(p3));
 		}
 		long endTime = System.currentTimeMillis();
-		System.out.println("Costs£º " + (endTime - startTime) / 1000 + "s");
+		System.out.println("CostsÂ£Âº " + (endTime - startTime) / 1000 + "s");
 		System.out.println("Finish");
 	}
 
 	// Return the lng&lat of address
 	// Use key
-	// public static final String AK = "AqQdnGImovCYwO2E2jeSmtCGDVppW6jF";
-	public static final String AK = "SHr3ZmCRL1AIp0wgtjGYbeeBxGXdNwkc";
-
+	public static final String AK = "INSERT KEY HERE";
 	public static Map<String, String> getLatitude(String address) {
 		try {
-			address 		  = URLEncoder.encode(address, "UTF-8"); // Transform address into utf-8 hexadecimal
+			address 	  = URLEncoder.encode(address, "UTF-8"); // Transform address into utf-8 hexadecimal
 			URL resjson 	  = new URL("http://api.map.baidu.com/geocoder/v2/?address=" + address + "&output=json&ak=" + AK);
 			BufferedReader in = new BufferedReader(new InputStreamReader(resjson.openStream()));
 			String res;
@@ -102,22 +100,22 @@ public class addressTrans {
 			if (str != null) {
 				// Use json to get simpler codes
 				// But I did'nt use json
-				int lngStart 		= str.indexOf("lng\":");
-				int lngEnd 			= str.indexOf(",\"lat");
-				int latEnd 			= str.indexOf("},\"precise");
-				int preciseStart 	= str.indexOf("\"precise\":");
-				int preciseEnd 		= str.indexOf(",\"confidence\"");
-				int confidenceStart	= str.indexOf("\"confidence\":");
-				int confidenceEnd 	= str.indexOf(",\"level\"");
-				int levelStart 		= str.indexOf("\"level\":");
-				int levelEnd 		= str.indexOf("\"}}");
+				int lngStart 	    = str.indexOf("lng\":");
+				int lngEnd 	    = str.indexOf(",\"lat");
+				int latEnd 	    = str.indexOf("},\"precise");
+				int preciseStart    = str.indexOf("\"precise\":");
+				int preciseEnd 	    = str.indexOf(",\"confidence\"");
+				int confidenceStart = str.indexOf("\"confidence\":");
+				int confidenceEnd   = str.indexOf(",\"level\"");
+				int levelStart 	    = str.indexOf("\"level\":");
+				int levelEnd 	    = str.indexOf("\"}}");
 				if (lngStart > 0 && lngEnd > 0 && latEnd > 0) {
-					String lng 			= str.substring(lngStart + 5, lngEnd);
-					String lat 			= str.substring(lngEnd + 7, latEnd);
-					String precise 		= str.substring(preciseStart + 10, preciseEnd);
-					String confidence	= str.substring(confidenceStart + 13, confidenceEnd);
-					String level 		= str.substring(levelStart + 9, levelEnd);
-					String levelNew 	= new String(level.getBytes("GBK"), "UTF-8");
+					String lng 	  = str.substring(lngStart + 5, lngEnd);
+					String lat 	  = str.substring(lngEnd + 7, latEnd);
+					String precise 	  = str.substring(preciseStart + 10, preciseEnd);
+					String confidence = str.substring(confidenceStart + 13, confidenceEnd);
+					String level 	  = str.substring(levelStart + 9, levelEnd);
+					String levelNew   = new String(level.getBytes("GBK"), "UTF-8");
 
 					map = new HashMap<String, String>();
 					map.put("lng", lng);
