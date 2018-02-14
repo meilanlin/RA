@@ -16,24 +16,24 @@ import org.json.JSONObject;
 
 public class addressTrans {
 	public static void main(String args[]) throws IOException {
-		String lng 			= null;
-		String lat 			= null;
+		String lng 		= null;
+		String lat 		= null;
 		String status 		= null;
 		String locationType 	= null;
 		
 		String currentLine 	= "";
 		String calLine 		= "";
 		int totalLine 		= 0;
-		int count 			= 0;
+		int count 		= 0;
 		
-		long startTime 			  = System.currentTimeMillis();
-		String pathname 		  = "D:\\test.txt";
-		File filename 			  = new File(pathname);
+		long startTime 	= System.currentTimeMillis();
+		String pathname = "D:\\test.txt";
+		File filename 	= new File(pathname);
 		InputStreamReader reader  = new InputStreamReader(new FileInputStream(filename));
-		BufferedReader br 		  = new BufferedReader(reader);
+		BufferedReader br 	  = new BufferedReader(reader);
 		// Get total lines
 		InputStreamReader reader2 = new InputStreamReader(new FileInputStream(filename));
-		BufferedReader cal 		  = new BufferedReader(reader2);
+		BufferedReader cal 	  = new BufferedReader(reader2);
 		while (calLine != null) {
 			calLine = cal.readLine(); // Read one line at a time
 			if (calLine == null)
@@ -50,10 +50,10 @@ public class addressTrans {
 			String address 	= info[1];
 			Map<String, String> map = addressTrans.getLatitude(address);
 			if (null != map) {
-				lng 			= map.get("lng");// longitude
-				lat 			= map.get("lat");// latitude
+				lng 		= map.get("lng");// longitude
+				lat 		= map.get("lat");// latitude
 				locationType 	= map.get("locationType");
-				status 			= map.get("status");// OK - success, ZERO_RESULTS - no info found
+				status 		= map.get("status");// OK - success, ZERO_RESULTS - no info found
 			}
 			try {
 				File csv = new File("D:\\output.csv");
@@ -79,7 +79,7 @@ public class addressTrans {
 			System.out.println(" " + nf.format(p3));
 		}
 		long endTime = System.currentTimeMillis();
-		System.out.println("Costs£º " + (endTime - startTime) / 1000 + "s");
+		System.out.println("Costsï¼š " + (endTime - startTime) / 1000 + "s");
 		System.out.println("Finish");
 	}
 
@@ -104,19 +104,19 @@ public class addressTrans {
 			}
 			in.close();
 			String str = sb.toString();
-			//½âÎöÕâ¶Îjson×Ö·û´®£¬Ê×ÏÈÈ¡µÃÒ»¸öJSONObject,Èç¹ûÖ»ÓĞÒ»²ãÊı¾İÖ±½ÓÊ¹ÓÃgetString("Ãû³Æ")¾Í¿ÉÒÔ£¬
-			//º¬ÓĞ¼¯ºÏµÄ»°¾ÍÊ¹ÓÃgetJSONArray("Ãû³Æ");ÏÈµÃµ½¼¯ºÏÈçÏÂËùÊ¾
+			//è§£æè¿™æ®µjsonå­—ç¬¦ä¸²ï¼Œé¦–å…ˆå–å¾—ä¸€ä¸ªJSONObject,å¦‚æœåªæœ‰ä¸€å±‚æ•°æ®ç›´æ¥ä½¿ç”¨getString("åç§°")å°±å¯ä»¥ï¼Œ
+			//å«æœ‰é›†åˆçš„è¯å°±ä½¿ç”¨getJSONArray("åç§°");å…ˆå¾—åˆ°é›†åˆå¦‚ä¸‹æ‰€ç¤º
 			JSONObject obj = new JSONObject(str.toString()); 
-			String status = obj.getString("status");
+			String status  = obj.getString("status");
 			System.out.println(status);
 			JSONArray objArray = obj.getJSONArray("results");
-			String lat = null;
-			String lng = null;
+			String lat 	    = null;
+			String lng 	    = null;
 			String locationType = null;
 			if(objArray.length() != 0) {
 				JSONObject location = objArray.getJSONObject(0).getJSONObject("geometry").getJSONObject("location");
-				lat = Double.toString(location.getDouble("lat"));
-				lng = Double.toString(location.getDouble("lng"));
+				lat 	     = Double.toString(location.getDouble("lat"));
+				lng 	     = Double.toString(location.getDouble("lng"));
 				locationType = objArray.getJSONObject(0).getJSONObject("geometry").getString("location_type");
 			}else {
 				lat = "null";
